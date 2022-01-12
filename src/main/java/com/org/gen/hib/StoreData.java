@@ -8,22 +8,22 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.Metadata;  
 import org.hibernate.boot.MetadataSources;  
 import org.hibernate.boot.registry.StandardServiceRegistry;  
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;  
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;  
 
 public class StoreData {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		 
-		    StandardServiceRegistry ssr=new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();  
-		    Metadata meta=new MetadataSources(ssr).getMetadataBuilder().build();  
-		      
-		    SessionFactory factory=meta.getSessionFactoryBuilder().build();  
-		    Session session=factory.openSession();  
-		      
-		    Transaction t=session.beginTransaction();    
-		        
+	     System.out.println("Hello World!");
+	     Configuration cfg= new Configuration();
+	     cfg.configure("hibernate.cfg.xml");
+	    SessionFactory factory=cfg.buildSessionFactory();  
+	    Session sess=factory.openSession();  
+	      
+	    sess.beginTransaction();
+	    
 		    Answer ans1=new Answer();    
 		    ans1.setAnswername("Java is a programming language");    
 		    ans1.setPostedBy("Ravi Malik");    
@@ -55,12 +55,12 @@ public class StoreData {
 		    Question question2=new Question();    
 		    question2.setQname("What is Servlet?");    
 		    question2.setAnswers(list2);    
+		       
+		   
+		    sess.save(question1);    
+		    sess.save(question2);    
 		        
-		    session.persist(question1);    
-		    session.persist(question2);    
-		        
-		    t.commit();    
-		    session.close();    
+		    sess.getTransaction().commit(); 
 		    System.out.println("success");    
 		}    
 		}   
